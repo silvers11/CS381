@@ -141,6 +141,9 @@ gt (Succ x) (Succ y) = gt x y
 --   9
 --
 mult :: Nat -> Nat -> Nat
+mult Zero y = Zero
+mult x Zero = Zero
+mult (Succ x) y = add (mult x y) y
 
 
 -- | Compute the sum of a list of natural numbers.
@@ -154,7 +157,9 @@ mult :: Nat -> Nat -> Nat
 --   >>> toInt (sum [one,two,three])
 --   6
 --
-sum = undefined
+sum :: [Nat] -> Nat
+sum [] = Zero
+sum (h:t) = add h (sum t)
 
 
 -- | An infinite list of all of the *odd* natural numbers, in order.
