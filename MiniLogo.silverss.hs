@@ -34,7 +34,7 @@ data Mode = Up
    deriving (Eq,Show)
 
 data Expr = Refer Var
-          | Lit Num 
+          | Num Int
           | Add Expr Expr
    deriving (Eq,Show)
 
@@ -66,3 +66,20 @@ nix :: Cmd
 nix = Define "nix" ["x","y","w","h"] 
                    [Call "line" [(Refer "x"), (Refer "y"), (Add (Refer "x") (Refer "w")), (Add (Refer "y") (Refer "h"))]
                   , Call "line" [(Refer "x"), (Add (Refer "y") (Refer "h")), (Add (Refer "x") (Refer "w")), (Refer "y")] ]
+
+-- 4.) Define Haskell function Steps that creates a MiniLogo Program
+--     That draws a staircase of n steps starting from (0,0)
+-- Idea: start at nth step, draw nth step then call step (n-1) until n=0
+
+steps :: Int -> Prog
+steps 0 = []
+steps n = [Call "line" [Num (n-1), Num (n-1), Num (n-1), Num n], Call "line" [Num (n-1), Num n, Num n, Num n]] ++ steps (n-1)
+
+-- 5.) define a Haskell function macros that returns a list of the names of all macros
+--      that are defined anywhere in a given MiniLogo program
+--   Base case: empty list returns empty list
+--   recursively append macros onto list as they appear in the Prog
+
+macros :: Prog -> [Macro]
+macros [] = []
+
