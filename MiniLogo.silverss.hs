@@ -102,11 +102,6 @@ pretty (Pen Up :ys) = "Pen Up;" ++ (pretty ys)
 pretty (Pen Down :ys) = "Pen Down;" ++ (pretty ys)
 
 
-prettyExprList :: [Expr] -> String
-prettyExprList [] = []
-prettyExprList (x:xs) = (prettyExpr x) ++ (prettyExprList xs)
-
-
 prettyExpr :: Expr -> String
 prettyExpr (Num x) = show x
 prettyExpr (Refer n) = n
