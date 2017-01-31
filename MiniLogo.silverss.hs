@@ -78,8 +78,31 @@ steps n = [Call "line" [Num (n-1), Num (n-1), Num (n-1), Num n], Call "line" [Nu
 -- 5.) define a Haskell function macros that returns a list of the names of all macros
 --      that are defined anywhere in a given MiniLogo program
 --   Base case: empty list returns empty list
---   recursively append macros onto list as they appear in the Prog
+--   check if the Cmd is a macro, recursively append macros onto list as they appear in the Prog
+--   and ignore everything else
+--   a macro is always followed by a var list and a prog
+
 
 macros :: Prog -> [Macro]
 macros [] = []
+macros (x:xs) = case x of Define m v p -> m:macros xs -- matches macros pattern, add to list
+                          otherwise -> macros xs --doesn't match, keep going through list
 
+-- 6.) Define a haskell function that pretty prints a MiniLogo Program
+--     Just need to make a case for each command, and a helper to deal with expressions
+
+pretty :: Prog -> String
+pretty [] = ""
+pretty (Call x xs) = x ++
+
+
+
+prettyExprList :: [Expr] -> String
+prettyExprList [] = []
+prettyExprList (x:xs) = (prettyExpr x) ++ (prettyExprList xs)
+
+
+prettyExpr :: Expr -> String
+prettyExpr (Num x) = show n
+prettyExpr (Refer n) = n
+prettyExpr (Add s t) = prettyExpr s ++ "+" ++ prettyExpr t
