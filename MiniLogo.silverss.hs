@@ -95,11 +95,11 @@ macros (x:xs) = case x of Define m v p -> m:macros xs -- matches macros pattern,
 
 pretty :: Prog -> String
 pretty [] = ""
-pretty (Define m xs y:ys) = "Define" ++ m ++ concat (intersperse "," xs) ++ ";" ++ (pretty ys)
-pretty (Call m xs:ys) = "Call" ++ m ++ concat (intersperse "," (map prettyExpr xs)) ++ ";" ++ (pretty ys)
-pretty (Move x y :ys) = "Move " ++ (prettyExpr x) ++ "," ++ (prettyExpr y) ++ ";" ++ (pretty ys)
-pretty (Pen Up :ys) = "Pen Up;" ++ (pretty ys)
-pretty (Pen Down :ys) = "Pen Down;" ++ (pretty ys)
+pretty (Define m xs y:ys) = "Define " ++ m ++ " (" ++ concat (intersperse ", " xs) ++ ")" ++ "{ \n" ++ (pretty y) ++ "}\n"
+pretty (Call m xs:ys) = "Call " ++ m ++ " (" ++ concat (intersperse ", " (map prettyExpr xs)) ++ "); \n" ++ (pretty ys)
+pretty (Move x y :ys) = "Move " ++ (prettyExpr x) ++ ", " ++ (prettyExpr y) ++ "; \n" ++ (pretty ys)
+pretty (Pen Up :ys) = "Pen up; \n" ++ (pretty ys)
+pretty (Pen Down :ys) = "Pen down; \n" ++ (pretty ys)
 
 
 prettyExpr :: Expr -> String
