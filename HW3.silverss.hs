@@ -1,3 +1,5 @@
+-- Steven Silvers, silverss
+
 module HW3 where
 
 import MiniMiniLogo
